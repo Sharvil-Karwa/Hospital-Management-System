@@ -37,6 +37,7 @@
             this.txtAddress = new System.Windows.Forms.TextBox();
             this.btnAddPatient = new System.Windows.Forms.Button();
             this.btnUpdatePatient = new System.Windows.Forms.Button();
+            this.deletePatient = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -118,11 +119,22 @@
             this.btnUpdatePatient.UseVisualStyleBackColor = true;
             this.btnUpdatePatient.Click += new System.EventHandler(this.btnUpdatePatient_Click);
             // 
+            // deletePatient
+            // 
+            this.deletePatient.Location = new System.Drawing.Point(49, 426);
+            this.deletePatient.Name = "deletePatient";
+            this.deletePatient.Size = new System.Drawing.Size(200, 23);
+            this.deletePatient.TabIndex = 9;
+            this.deletePatient.Text = "Delete Patient";
+            this.deletePatient.UseVisualStyleBackColor = true;
+            this.deletePatient.Click += new System.EventHandler(this.deletePatient_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(879, 512);
+            this.Controls.Add(this.deletePatient);
             this.Controls.Add(this.btnUpdatePatient);
             this.Controls.Add(this.btnAddPatient);
             this.Controls.Add(this.txtAddress);
@@ -152,6 +164,7 @@
         private System.Windows.Forms.TextBox txtAddress;
         private System.Windows.Forms.Button btnAddPatient;
         private System.Windows.Forms.Button btnUpdatePatient;
+        private System.Windows.Forms.Button deletePatient;
     }
 }
 

@@ -158,5 +158,52 @@ namespace HospitalManagementSystem
             }
         }
 
+        private void deletePatient_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count > 0) 
+            {
+                int patientID = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["PatientID"].Value);
+
+                DialogResult result = MessageBox.Show("Are you sure you want to delete this patient?", "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                if (result == DialogResult.Yes)
+                {
+                    string query = "DELETE FROM patients WHERE PatientID = @PatientID";
+
+                    using (MySqlConnection conn = new MySqlConnection(connectionString))
+                    {
+                        using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                        {
+                            cmd.Parameters.AddWithValue("@PatientID", patientID);
+
+                            try
+                            {
+                                conn.Open();
+                                int rowsAffected = cmd.ExecuteNonQuery();
+
+                                if (rowsAffected > 0)
+                                {
+                                    MessageBox.Show("Patient deleted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    LoadPatients(); 
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Deletion failed.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show("Error: " + ex.Message, "Delete Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a patient to delete.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
     }
 }
