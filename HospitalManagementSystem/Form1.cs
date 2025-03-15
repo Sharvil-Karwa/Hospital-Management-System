@@ -205,5 +205,48 @@ namespace HospitalManagementSystem
             }
         }
 
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            string searchValue = txtSearch.Text.Trim();
+            if (string.IsNullOrEmpty(searchValue))
+            {
+                MessageBox.Show("Please enter a search keyword.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string query = "SELECT * FROM patients WHERE Name LIKE @Search OR Phone LIKE @Search OR Email LIKE @Search";
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Search", "%" + searchValue + "%");
+
+                    try
+                    {
+                        conn.Open();
+                        DataTable dt = new DataTable();
+                        using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
+                        {
+                            adapter.Fill(dt);
+                        }
+
+                        if (dt.Rows.Count > 0)
+                        {
+                            dataGridView1.DataSource = dt;
+                        }
+                        else
+                        {
+                            MessageBox.Show("No matching records found.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error: " + ex.Message, "Search Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
     }
 }
